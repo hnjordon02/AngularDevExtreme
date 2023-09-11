@@ -1,0 +1,101 @@
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Plantilla de DevExtreme para manipular data</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a routerLink="/main">Home</a></li>
+              <li class="breadcrumb-item active">DevExtreme</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">DEV-EXTREME</h3>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+            DEV-XTREME WILL SAVE MY WORK BUDDY!
+            <dx-button text="Click Me" (onClick)="helloWorld()"></dx-button>
+            <dx-data-grid id="dataGrid" 
+                          [allowColumnReordering]="true"
+                          [dataSource]="employees" keyExpr="EmployeeID"
+                          (onSelectionChanged)="selectEmployee($event)"
+                          (onExporting)="exportGrid($event)">
+                <dxo-grouping [autoExpandAll]="expanded"></dxo-grouping>
+                <dxo-toolbar>
+                    <dxi-item name="groupPanel"></dxi-item>
+                    <dxi-item location="after">
+                        <dx-button
+                            [text]="expanded ? 'Collapse All' : 'Expand All'"
+                            [width]="136"
+                            (onClick)="expanded = !expanded">
+                        </dx-button>
+                    </dxi-item>
+                    <dxi-item name="addRowButton" showText="always"></dxi-item>
+                    <dxi-item name="exportButton"></dxi-item>
+                    <dxi-item name="columnChooserButton"></dxi-item>
+                    <dxi-item name="searchPanel"></dxi-item>
+                </dxo-toolbar>
+                <dxo-export [enabled]="true" [formats]="['xlsx','pdf']"></dxo-export>
+                <dxi-column dataField="FullName" [fixed]="true"></dxi-column>
+                <dxi-column dataField="Position"></dxi-column>
+                <dxi-column dataField="BirthDate" dataType="date" [width]="100"></dxi-column>
+                <dxi-column dataField="HireDate" dataType="date"[width]="100"></dxi-column>
+                <dxi-column dataField="City"></dxi-column>
+
+                <dxi-column dataField="Country" groupIndex="0"></dxi-column>
+                <dxo-group-panel [visible]="true"></dxo-group-panel>
+
+                <dxi-column dataField="Address"></dxi-column>
+                <dxi-column dataField="HomePhone"></dxi-column>
+                <dxi-column dataField="PostalCode"></dxi-column>
+                <dxo-filter-row [visible]="true"></dxo-filter-row>
+                <dxo-search-panel [visible]="true"></dxo-search-panel>
+                <dxo-editing
+                          mode="popup"
+                          [allowUpdating]="true"
+                          [allowDeleting]="true"
+                          [allowAdding]="true">
+                </dxo-editing>
+                <dxo-summary>
+                  <dxi-group-item
+                      summaryType="count">
+                  </dxi-group-item>
+              </dxo-summary>
+              <dxo-selection mode="single"></dxo-selection>
+              <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+            </dx-data-grid>
+            <p id="selected-employee" *ngIf="selectedEmployee">
+                Seleccionado: {{ selectedEmployee.FullName }}
+            </p>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+           <p>DEV-XTREME'S FOOTER</p> 
+        </div>
+        <!-- /.card-footer-->
+      </div>
+      <!-- /.card -->
+    </section>
+    <!-- /.content -->
+  </div>
+<!-- /.content-wrapper -->
+
