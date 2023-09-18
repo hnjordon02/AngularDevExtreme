@@ -1,0 +1,97 @@
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>PAYMENT</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">PAYMENT</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Reporte de pagos</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+           <dx-date-range-box 
+                     [max]="startDate"  
+                     endDateLabel="End"
+                     labelMode="floating"   
+                     (onValueChanged)="onDateRangeChanged($event)" 
+                     displayFormat="yyyy-MM-dd"
+                     class="mb-2"
+           ></dx-date-range-box>
+           <dx-data-grid
+             [allowColumnReordering]="true"
+             [dataSource]="payments" keyExpr="payment_id"
+             (onExporting)="exportGrid($event)"
+             class="table table-striped">
+             <dxo-grouping [autoExpandAll]="expanded"></dxo-grouping>
+            <dxo-toolbar>
+                <dxi-item name="groupPanel"></dxi-item>
+                <dxi-item location="after">
+                    <dx-button
+                    [text]="expanded ? 'Collapse All' : 'Expand All'"
+                    [width]="136"
+                    (onClick)="expanded = !expanded">
+                </dx-button>
+                </dxi-item>
+                <dxi-item name="addRowButton" showText="always"></dxi-item>
+                <dxi-item name="exportButton"></dxi-item>
+                <dxi-item name="columnChooserButton"></dxi-item>
+                <dxi-item name="searchPanel"></dxi-item>    
+            </dxo-toolbar>
+            <dxo-group-panel [visible]="true"></dxo-group-panel>
+            <dxo-export [enabled]="true" [formats]="['xlsx','pdf']"></dxo-export>
+            <dxi-column dataField="payment_id"></dxi-column>
+            <dxi-column dataField="fullname" [fixed]="true"></dxi-column>
+            <dxi-column dataField="staff_id"></dxi-column>
+            <dxi-column dataField="rental_id"></dxi-column>
+            <dxi-column dataField="title"></dxi-column>
+            <dxi-column dataField="amount"></dxi-column>
+            <dxi-column dataField="payment_date" dataType="date"></dxi-column>
+            <dxo-filter-row [visible]="true"></dxo-filter-row>
+            <dxo-search-panel [visible]="true"></dxo-search-panel>
+            <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+            <dxo-pager
+                [showInfo]="true"
+                infoText="Page #{0}. Total: {1} ({2} items)"
+                [showNavigationButtons]="true">
+           </dxo-pager>
+           </dx-data-grid>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+          Footer
+        </div>
+        <!-- /.card-footer-->
+      </div>
+      <!-- /.card -->
+    </section>
+    <!-- /.content -->
+</div>
+    <!-- /.content-wrapper -->
+<!-- /.control-sidebar -->
+

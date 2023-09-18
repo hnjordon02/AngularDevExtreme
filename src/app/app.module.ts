@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import {HttpClientModule} from '@angular/common/http';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/templates/header/header.component';
@@ -9,7 +11,9 @@ import { DevExtremeTestComponent } from './components/dev-extreme-test/dev-extre
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PivotExtremeComponent } from './components/pivot-extreme/pivot-extreme.component';
 
-import { DxButtonModule, DxDataGridModule, DxPivotGridModule } from 'devextreme-angular';
+import { DxButtonModule, DxDataGridModule, DxPivotGridModule,DxDateRangeBoxModule } from 'devextreme-angular';
+import { PaymentsFilmComponent } from './components/payments-film/payments-film.component';
+import { CountryComponent } from './components/country/country.component';
 
 @NgModule({
   declarations: [
@@ -18,14 +22,18 @@ import { DxButtonModule, DxDataGridModule, DxPivotGridModule } from 'devextreme-
     FooterComponent,
     DevExtremeTestComponent,
     DashboardComponent,
-    PivotExtremeComponent
+    PivotExtremeComponent,
+    PaymentsFilmComponent,
+    CountryComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     DxButtonModule,
     DxDataGridModule,
-    DxPivotGridModule
+    DxPivotGridModule,
+    DxDateRangeBoxModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
