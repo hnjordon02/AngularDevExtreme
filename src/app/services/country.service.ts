@@ -16,8 +16,20 @@ export class CountryService {
     private apiUrl = 'http://localhost:9005/api';
     constructor(private http: HttpClient) { }
 
-    getCountries():Observable<any[]> {
+    getCountries(): Observable<any[]> {
         const url = `${this.apiUrl}/country/`;
         return this.http.get<any[]>(url);
+    }
+
+    addCountry(countryName: string): Observable<any> {
+        const url = `${this.apiUrl}/country/newCountry`;
+        const newCountry = {country: countryName};
+        return this.http.post(url,newCountry);
+    }
+
+    updateCountry(countryName: String): Observable<any> {
+        const url = `${this.apiUrl}/country/`;
+        const updateCountry = {country: countryName}
+        return this.http.put(url,updateCountry);
     }
 }

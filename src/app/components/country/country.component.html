@@ -16,7 +16,7 @@
         </div>
       </div><!-- /.container-fluid -->
     </section>
-    
+
     <!-- Main content -->
     <section class="content">
       <!-- Default box -->
@@ -33,13 +33,37 @@
           </div>
         </div>
         <div class="card-body">
-          <dx-data-grid [dataSource]="countries" keyExpr="country_id" class="table table-striped">
+          <dx-data-grid 
+                    [dataSource]="countries"
+                     keyExpr="country_id"
+                     class="table table-striped"
+                     (onRowInserted)="addNewCountry($event)">
+            <dxo-toolbar>
+                <dxi-item name="groupPanel"></dxi-item>
+                <dxi-item location="after">
+                    <dx-button
+                        [text]="expanded ? 'Collapse All' : 'Expand All'"
+                        [width]="136"
+                        (onClick)="expanded = !expanded">
+                    </dx-button>
+                </dxi-item>
+                <dxi-item name="addRowButton" showText="always"></dxi-item>
+                <dxi-item name="exportButton"></dxi-item>
+                <dxi-item name="columnChooserButton"></dxi-item>
+                <dxi-item name="searchPanel"></dxi-item>
+            </dxo-toolbar>
             <dxi-column dataField="country_id" [width]="100"></dxi-column>
             <dxi-column dataField="country" ></dxi-column>
             <dxi-column dataField="last_update" ></dxi-column>
             <dxo-filter-row [visible]="true"></dxo-filter-row>
             <dxo-search-panel [visible]="true"></dxo-search-panel>
             <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+            <dxo-editing
+                    mode="popup"
+                    [allowUpdating]="true"
+                    [allowDeleting]="true"
+                    [allowAdding]="true">
+            </dxo-editing>
             <dxo-pager
                 [showInfo]="true"
                 infoText="Page #{0}. Total: {1} ({2} items)"
