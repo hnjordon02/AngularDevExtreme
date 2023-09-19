@@ -5,7 +5,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>COUNTRY LIST</h1>
+            <h1>{{pageTitle}}</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -34,10 +34,11 @@
         </div>
         <div class="card-body">
           <dx-data-grid 
-                    [dataSource]="countries"
+                     [dataSource]="countries"
                      keyExpr="country_id"
                      class="table table-striped"
-                     (onRowInserted)="addNewCountry($event)">
+                     (onRowInserted)="addNewCountry($event)"
+                     (onRowUpdated)="handleRowEdit($event)">          
             <dxo-toolbar>
                 <dxi-item name="groupPanel"></dxi-item>
                 <dxi-item location="after">
@@ -47,22 +48,25 @@
                         (onClick)="expanded = !expanded">
                     </dx-button>
                 </dxi-item>
-                <dxi-item name="addRowButton" showText="always"></dxi-item>
+                <dxi-item name="addRowButton" showText="always" [title]="'Nuevo registro'"></dxi-item>
                 <dxi-item name="exportButton"></dxi-item>
                 <dxi-item name="columnChooserButton"></dxi-item>
                 <dxi-item name="searchPanel"></dxi-item>
             </dxo-toolbar>
-            <dxi-column dataField="country_id" [width]="100"></dxi-column>
-            <dxi-column dataField="country" ></dxi-column>
-            <dxi-column dataField="last_update" ></dxi-column>
+            <dxi-column dataField="country_id" [width]="100" [allowEditing]="false"></dxi-column>
+            <dxi-column dataField="country" [allowEditing]="true">
+              <dxi-validation-rule type="required"></dxi-validation-rule>
+            </dxi-column>
+            <dxi-column dataField="last_update" [width]="200" [allowEditing]="false"></dxi-column>
+            <dxo-header-filter [visible]="true"></dxo-header-filter>
             <dxo-filter-row [visible]="true"></dxo-filter-row>
             <dxo-search-panel [visible]="true"></dxo-search-panel>
             <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
             <dxo-editing
                     mode="popup"
                     [allowUpdating]="true"
-                    [allowDeleting]="true"
-                    [allowAdding]="true">
+                    [allowAdding]="true"
+                    [useIcons]="true">
             </dxo-editing>
             <dxo-pager
                 [showInfo]="true"

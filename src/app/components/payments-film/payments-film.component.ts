@@ -12,7 +12,7 @@ import { exportDataGrid } from 'devextreme/excel_exporter';
   styleUrls: ['./payments-film.component.css']
 })
 export class PaymentsFilmComponent {
-  
+  pageTitle: string = 'Payments';
   now: Date = new Date();
   startDate: Date = new Date();
   payments: Payment[] = [];

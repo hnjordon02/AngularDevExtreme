@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Country, CountryService } from 'src/app/services/country.service';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-country',
@@ -8,9 +7,11 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./country.component.css']
 })
 export class CountryComponent implements OnInit {
+  pageTitle: string = 'COUNTRY-LIST';
   countries: Country[] = [];
-  expanded: boolean = true;
+  expanded: boolean = true; 
   newCountryName: string=''; //VARIABLE PARA ASIGNAR NUEVO REGISTRO
+  selectedCountry: Country | null = null; // País seleccionado para la edición
 
   constructor(public countryService: CountryService) { }
 
@@ -22,20 +23,19 @@ export class CountryComponent implements OnInit {
   getCountryList() {
     this.countryService.getCountries().subscribe(
       (data: any) => { 
-        this.countries = data.data; // Asigna la matriz de países directamente
+        this.countries = data.data; 
       },
       (error) => {
         console.error('Error al obtener la lista de países:', error);
       }
     );
   }
-
  // CREAR UN NUEVO PAIS -> METODO POST
  addNewCountry(event: any) {
   const newCountryName = event.data.country; // Obtén el nombre del nuevo país
   this.countryService.addCountry(newCountryName).subscribe(
     (response: any) => {
-      // El país se ha agregado correctamente, puedes realizar alguna acción adicional si es necesario
+      // El país se ha agregado correctamente
       console.log('Nuevo país agregado:', response);
 
       // Vuelve a cargar la lista de países para mostrar el nuevo país en la tabla
@@ -48,6 +48,29 @@ export class CountryComponent implements OnInit {
   // Limpia el campo del nombre del nuevo país después de agregarlo
   this.newCountryName = '';
 }
+
+  //ACTUALIZAR DESDE EL FRONT
+  handleRowEdit(event: any) {
+    const updatedCountry = event.data;
+    // Asegúrate de que estás obteniendo los datos correctos para la actualización
+    console.log('País seleccionado para actualizar:', updatedCountry);
+  
+    this.countryService.updateCountry(updatedCountry.country_id, updatedCountry.country).subscribe(
+      (response: any) => {
+        // País actualizado con éxito
+        console.log('País actualizado:', response);
+  
+        // Vuelve a cargar la lista de países para mostrar los cambios en la tabla
+        this.getCountryList();
+  
+        // Limpia la selección del país después de la actualización
+        this.selectedCountry = null;
+      },
+      (error) => {
+        console.error('Error al actualizar el registro:', error);
+      }
+    );
+  }
   
 }
 

@@ -4,8 +4,8 @@ import { Observable } from "rxjs";
 
 export interface Country{
     country_id: number,
-    country: String,
-    lastt_update:String
+    country: string,
+    last_update:String
 }
 
 @Injectable({
@@ -27,9 +27,10 @@ export class CountryService {
         return this.http.post(url,newCountry);
     }
 
-    updateCountry(countryName: String): Observable<any> {
-        const url = `${this.apiUrl}/country/`;
-        const updateCountry = {country: countryName}
-        return this.http.put(url,updateCountry);
-    }
+    updateCountry(id: number, countryName: string): Observable<any> {
+        const url = `${this.apiUrl}/country/${id}`;
+        const updateCountry = { country: countryName };
+        return this.http.put(url, updateCountry);
+      }
+      
 }
