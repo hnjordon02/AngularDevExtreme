@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Country, CountryService } from 'src/app/services/country.service';
+import notify from 'devextreme/ui/notify';
 
 @Component({
   selector: 'app-country',
@@ -27,6 +28,11 @@ export class CountryComponent implements OnInit {
       },
       (error) => {
         console.error('Error al obtener la lista de países:', error);
+        notify({ 
+          message: `Ha ocurrido un error: ${error.message}`, // Concatena el mensaje de error original
+          width: 300, 
+          shading: true 
+        },"error",3500);
       }
     );
   }
@@ -37,6 +43,10 @@ export class CountryComponent implements OnInit {
     (response: any) => {
       // El país se ha agregado correctamente
       console.log('Nuevo país agregado:', response);
+      notify({ 
+        message:'Datos registrados',
+        width: 300, 
+      },"success",3500);
 
       // Vuelve a cargar la lista de países para mostrar el nuevo país en la tabla
       this.getCountryList();
@@ -59,7 +69,12 @@ export class CountryComponent implements OnInit {
       (response: any) => {
         // País actualizado con éxito
         console.log('País actualizado:', response);
-  
+        //REGISTRO AGREGADO
+        notify({ 
+          message:'Datos actualizados exitosamente',
+          width: 300, 
+        },"success",3500);
+        //FIN DE ALERTA
         // Vuelve a cargar la lista de países para mostrar los cambios en la tabla
         this.getCountryList();
   
