@@ -61,17 +61,18 @@
                 <dxi-column dataField="HireDate" dataType="date"[width]="100"></dxi-column>
                 <dxi-column dataField="City"></dxi-column>
                 <dxi-column dataField="Country" groupIndex="0"></dxi-column>
-                <dxo-group-panel [visible]="true"></dxo-group-panel>
                 <dxi-column dataField="Address"></dxi-column>
                 <dxi-column dataField="HomePhone"></dxi-column>
                 <dxi-column dataField="PostalCode"></dxi-column>
+                <dxo-group-panel [visible]="true"></dxo-group-panel>
                 <dxo-filter-row [visible]="true"></dxo-filter-row>
                 <dxo-search-panel [visible]="true"></dxo-search-panel>
                 <dxo-editing
                           mode="popup"
                           [allowUpdating]="true"
                           [allowDeleting]="true"
-                          [allowAdding]="true">
+                          [allowAdding]="true"
+                          [useIcons]="true">
                 </dxo-editing>
                 <dxo-summary>
                   <dxi-group-item

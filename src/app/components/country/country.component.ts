@@ -1,13 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Country, CountryService } from 'src/app/services/country.service';
 import notify from 'devextreme/ui/notify';
+import * as ExcelJS from 'node_modules/exceljs';
+import saveAs from 'file-saver';
+import { exportDataGrid as exportDataGridToPdf } from 'devextreme/pdf_exporter';
+import { jsPDF } from 'jspdf';
+import { exportDataGrid } from 'devextreme/excel_exporter';
 
 @Component({
   selector: 'app-country',
   templateUrl: './country.component.html',
   styleUrls: ['./country.component.css']
 })
-export class CountryComponent implements OnInit {
+
+export class CountryComponent implements OnInit { 
   pageTitle: string = 'COUNTRY-LIST';
   countries: Country[] = [];
   expanded: boolean = true; 
@@ -36,6 +42,7 @@ export class CountryComponent implements OnInit {
       }
     );
   }
+
  // CREAR UN NUEVO PAIS -> METODO POST
  addNewCountry(event: any) {
   const newCountryName = event.data.country; // Obtén el nombre del nuevo país
@@ -86,6 +93,33 @@ export class CountryComponent implements OnInit {
       }
     );
   }
+
+  //EXPORTAR DATOS DEL GRID
+  exportGrid(e:any) {
+    if(e.format === 'xlsx'){
+      const workbook = new ExcelJS.Workbook(); 
+      const worksheet = workbook.addWorksheet("Main sheet"); 
+      exportDataGrid({ 
+        worksheet: worksheet, 
+        component: e.component,
+      }).then(function() {
+        workbook.xlsx.writeBuffer().then(function(buffer:any) { 
+          saveAs(new Blob([buffer], { type: "application/octet-stream" }), "CountryReport.xlsx"); 
+        }); 
+      }); 
+      e.cancel = true;
+
+    } else if (e.format === 'pdf'){
+        const doc = new jsPDF();
+        exportDataGridToPdf({
+          jsPDFDocument: doc,
+          component: e.component,
+        }).then(() => {
+          doc.save('DataGrid.pdf');
+        });
+    }
+
+  } 
   
 }
 

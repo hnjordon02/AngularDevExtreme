@@ -38,7 +38,8 @@
                      keyExpr="country_id"
                      class="table table-striped"
                      (onRowInserted)="addNewCountry($event)"
-                     (onRowUpdated)="handleRowEdit($event)">          
+                     (onRowUpdated)="handleRowEdit($event)"
+                     (onExporting)="exportGrid($event)">          
             <dxo-toolbar>
                 <dxi-item name="groupPanel"></dxi-item>
                 <dxi-item location="after">
@@ -58,6 +59,7 @@
               <dxi-validation-rule type="required"></dxi-validation-rule>
             </dxi-column>
             <dxi-column dataField="last_update" [width]="200" [allowEditing]="false"></dxi-column>
+            <dxo-export [enabled]="true" [formats]="['xlsx','pdf']"></dxo-export>
             <dxo-header-filter [visible]="true"></dxo-header-filter>
             <dxo-group-panel [visible]="true"></dxo-group-panel>
             <dxo-filter-row [visible]="true"></dxo-filter-row>
@@ -74,7 +76,7 @@
                 infoText="Page #{0}. Total: {1} ({2} items)"
                 [showNavigationButtons]="true">
            </dxo-pager>
-          </dx-data-grid>
+        </dx-data-grid>
         </div>
         <!-- /.card-body -->
         <div class="card-footer">
